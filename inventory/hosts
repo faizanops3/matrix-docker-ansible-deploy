@@ -18,4 +18,4 @@
 # to the host line below.
 
 [matrix_servers]
-matrix.bloomi5.com ansible_host=37.27.205.170 ansible_ssh_user=root
+matrix.bloomi5.com ansible_host=37.27.205.170 ansible_ssh_user=root ansible_connection=local
