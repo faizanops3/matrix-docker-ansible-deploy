@@ -7,7 +7,13 @@
 #
 # If you've deployed using the wrong domain, you'll have to run the Uninstalling step,
 # because you can't change the Domain after deployment.
-matrix_domain: matrix.bloomi5.com
+matrix_domain: "matrix.bloomi5.com"
+
+# This is where Matrix services
+matrix_server_fqn_matrix: "matrix.bloomi5.com"
+
+matrix_server_fqn_element: "element.bloomi5.com"
+
 
 # The Matrix homeserver software to install.
 # See:
@@ -27,6 +33,8 @@ matrix_homeserver_generic_secret_key: 'bfuRIGoLmwXCtmM6wuxtLiZuNu2g1SVGN9nwHgkXJ
 # It will retrieve SSL certificates for you on-demand and forward requests to all other components.
 # For alternatives, see `docs/configuring-playbook-own-webserver.md`.
 matrix_playbook_reverse_proxy_type: playbook-managed-traefik
+
+traefik_config_certificatesResolvers_acme_email: "faizanops@alazka.ai"
 
 # Controls whether container networks will be created with IPv6 support.
 #
