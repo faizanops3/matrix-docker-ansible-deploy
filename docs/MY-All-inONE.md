@@ -46,7 +46,7 @@ inventory\host_vars\matrix.bloomi5.com\vars.yml
 inventory\hosts
 ```
 
-## 5. Run the playbook
+## 5. Install the playbook
 
 ### Update Ansible Roles
 
@@ -61,3 +61,19 @@ Then, run the command below to start installation:
 ```sh
 ansible-playbook -i inventory/hosts setup.yml --tags=install-all,ensure-matrix-users-created,start
 ```
+
+
+## 6. Create your user account
+
+### Admin account
+
+```sh
+ansible-playbook -i inventory/hosts setup.yml --extra-vars='username=admin password=xxxxx admin=yes' --tags=register-user
+```
+
+### User account
+
+```sh
+ansible-playbook -i inventory/hosts setup.yml --extra-vars='username=teammember password=SecurePassword123 admin=no' --tags=register-user
+```
+
