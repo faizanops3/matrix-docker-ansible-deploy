@@ -120,14 +120,32 @@ To update your playbook directory and all upstream Ansible roles, run:
 -   either: `just update`
 -   or: a combination of `git pull` and `just roles` (or `make roles` if you have `make` program on your computer instead of `just`)
 
-If you don't have either `just` tool or `make` program, you can run the `ansible-galaxy` tool directly: `rm -rf roles/galaxy; ansible-galaxy install -r requirements.yml -p roles/galaxy/ --force`
+If you don't have either `just` tool or `make` program, you can run the `ansible-galaxy` tool directly:
+
+```sh
+rm -rf roles/galaxy; ansible-galaxy install -r requirements.yml -p roles/galaxy/ --force
+```
+
+```sh
+apt install sshpass
+
+
+
+systemctl restart systemd-logind.service
+systemctl restart unattended-upgrades.service
+
+```
 
 ### Run installation command
 
 Then, run the command below to start installation:
 
 ```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=install-all,ensure-matrix-users-created,start
+export ANSIBLE_HOST_KEY_CHECKING=False
+```
+
+```sh
+ansible-playbook -i inventory/hosts setup.yml --tags=install-all,ensure-matrix-users-created,start --ask-pass
 ```
 
 If you **don't** use SSH keys for authentication, but rather a regular password, you may need to add `--ask-pass` to the command.
