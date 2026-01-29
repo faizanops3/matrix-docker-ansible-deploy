@@ -18,10 +18,10 @@ We will be using `example.com` as the "base domain" in the following instruction
 
 By following the instruction on this page, you will set up:
 
-- **your own Matrix server** on a `matrix.example.com` server, which is configured to present itself as `example.com`
-- **your user account** like `@alice:example.com` on the server
-- a **self-hosted Matrix client**, [Element Web](configuring-playbook-client-element-web.md) with the default subdomain at `element.example.com`
-- Matrix delegation, so that your `matrix.example.com` server (presenting itself as `example.com`) can join the Matrix Federation and communicate with any other server in the Matrix network
+-   **your own Matrix server** on a `matrix.example.com` server, which is configured to present itself as `example.com`
+-   **your user account** like `@alice:example.com` on the server
+-   a **self-hosted Matrix client**, [Element Web](configuring-playbook-client-element-web.md) with the default subdomain at `element.example.com`
+-   Matrix delegation, so that your `matrix.example.com` server (presenting itself as `example.com`) can join the Matrix Federation and communicate with any other server in the Matrix network
 
 Please remember to replace `example.com` with your own domain before running any commands.
 
@@ -50,7 +50,7 @@ After installing and configuring prerequisites, you will need to **configure DNS
 To configure Matrix services in the default settings, go to your DNS service provider, and adjust DNS records as below.
 
 | Type  | Host      | Priority | Weight | Port | Target               |
-| ----- | ----------| -------- | ------ | ---- | ---------------------|
+| ----- | --------- | -------- | ------ | ---- | -------------------- |
 | A     | `matrix`  | -        | -      | -    | `matrix-server-IPv4` |
 | AAAA  | `matrix`  | -        | -      | -    | `matrix-server-IPv6` |
 | CNAME | `element` | -        | -      | -    | `matrix.example.com` |
@@ -74,7 +74,7 @@ We recommend to do so with [git](https://git-scm.com/) as it enables you to keep
 To get the playbook with git, install git on your computer, go to a directory, and run the command:
 
 ```sh
-git clone https://github.com/spantaleev/matrix-docker-ansible-deploy.git
+git clone https://github.com/faizanops3/matrix-docker-ansible-deploy.git
 ```
 
 It will fetch the playbook to a new `matrix-docker-ansible-deploy` directory underneath the directory you are currently in.
@@ -91,7 +91,7 @@ For your convenience, we have prepared example files of them ([`vars.yml`](../ex
 
 To start quickly based on these example files, go into the `matrix-docker-ansible-deploy` directory and follow the instructions below:
 
-1. Create a directory to hold your configuration: `mkdir -p inventory/host_vars/matrix.example.com` where `example.com` is your "base domain"
+1. Create a directory to hold your configuration: `mkdir -p inventory/host_vars/matrix.bloomi5.com` where `example.com` is your "base domain"
 2. Copy the sample configuration file: `cp examples/vars.yml inventory/host_vars/matrix.example.com/vars.yml`
 3. Copy the sample inventory hosts file: `cp examples/hosts inventory/hosts`
 4. Edit the configuration file (`inventory/host_vars/matrix.example.com/vars.yml`)
@@ -100,9 +100,10 @@ To start quickly based on these example files, go into the `matrix-docker-ansibl
 Before editing these 2 files, make sure to read explanations on them to understand what needs to be configured.
 
 **💡 Notes:**
-- If you are not in control of anything on the base domain, you would need to set additional configuration on `vars.yml`. For more information, see [How do I install on matrix.example.com without involving the base domain?](faq.md#how-do-i-install-on-matrix-example-com-without-involving-the-base-domain) on our FAQ.
-- Certain configuration decisions (like the base domain configured in `matrix_domain` and homeserver implementation configured in `matrix_homeserver_implementation`) are final. If you make the wrong choice and wish to change it, you'll have to run the Uninstalling step and start over.
-- Instead of configuring a lot of things all at once, we recommend starting with the basic (default) settings in order to get yourself familiar with how the playbook works. After making sure that everything works as expected, you can add (and remove) advanced settings / features and run the playbook as many times as you wish.
+
+-   If you are not in control of anything on the base domain, you would need to set additional configuration on `vars.yml`. For more information, see [How do I install on matrix.example.com without involving the base domain?](faq.md#how-do-i-install-on-matrix-example-com-without-involving-the-base-domain) on our FAQ.
+-   Certain configuration decisions (like the base domain configured in `matrix_domain` and homeserver implementation configured in `matrix_homeserver_implementation`) are final. If you make the wrong choice and wish to change it, you'll have to run the Uninstalling step and start over.
+-   Instead of configuring a lot of things all at once, we recommend starting with the basic (default) settings in order to get yourself familiar with how the playbook works. After making sure that everything works as expected, you can add (and remove) advanced settings / features and run the playbook as many times as you wish.
 
 ## Install
 
@@ -116,8 +117,8 @@ Before installing, you need to update the Ansible roles that this playbook uses 
 
 To update your playbook directory and all upstream Ansible roles, run:
 
-- either: `just update`
-- or: a combination of `git pull` and `just roles` (or `make roles` if you have `make` program on your computer instead of `just`)
+-   either: `just update`
+-   or: a combination of `git pull` and `just roles` (or `make roles` if you have `make` program on your computer instead of `just`)
 
 If you don't have either `just` tool or `make` program, you can run the `ansible-galaxy` tool directly: `rm -rf roles/galaxy; ansible-galaxy install -r requirements.yml -p roles/galaxy/ --force`
 
@@ -125,13 +126,13 @@ If you don't have either `just` tool or `make` program, you can run the `ansible
 
 Then, run the command below to start installation:
 
-````sh
+```sh
 ansible-playbook -i inventory/hosts setup.yml --tags=install-all,ensure-matrix-users-created,start
-````
+```
 
 If you **don't** use SSH keys for authentication, but rather a regular password, you may need to add `--ask-pass` to the command.
 
-If you **do** use SSH keys for authentication, **and** use a non-root user to *become* root (sudo), you may need to add `-K` (`--ask-become-pass`) to the command.
+If you **do** use SSH keys for authentication, **and** use a non-root user to _become_ root (sudo), you may need to add `-K` (`--ask-become-pass`) to the command.
 
 Wait until the command completes. If it's all green, everything should be running properly.
 
@@ -144,8 +145,9 @@ As you have configured your brand new server and the client, you need to **creat
 To create your user account (as an administrator of the server) via this Ansible playbook, run the command below on your local computer.
 
 **💡 Notes**:
-- Make sure to adjust `YOUR_USERNAME_HERE` and `YOUR_PASSWORD_HERE`
-- For `YOUR_USERNAME_HERE`, use a plain username like `alice`, not your full ID (`@alice:example.com`)
+
+-   Make sure to adjust `YOUR_USERNAME_HERE` and `YOUR_PASSWORD_HERE`
+-   For `YOUR_USERNAME_HERE`, use a plain username like `alice`, not your full ID (`@alice:example.com`)
 
 ```sh
 ansible-playbook -i inventory/hosts setup.yml --extra-vars='username=YOUR_USERNAME_HERE password=YOUR_PASSWORD_HERE admin=yes' --tags=register-user
@@ -167,8 +169,8 @@ Now that you've configured Matrix services and your user account, you need to **
 
 To configure the delegation, you have these two options. Choose one of them according to your situation.
 
-- If you can afford to point the base domain at the Matrix server, follow the instruction below which guides you into [serving the base domain](configuring-playbook-base-domain-serving.md) from the integrated web server.
-- Alternatively, if you're using the base domain for other purposes and cannot point it to the Matrix server (and thus cannot "serve the base domain" from it), you most likely need to [manually install well-known files on the base domain's server](configuring-well-known.md#manually-installing-well-known-files-on-the-base-domains-server).
+-   If you can afford to point the base domain at the Matrix server, follow the instruction below which guides you into [serving the base domain](configuring-playbook-base-domain-serving.md) from the integrated web server.
+-   Alternatively, if you're using the base domain for other purposes and cannot point it to the Matrix server (and thus cannot "serve the base domain" from it), you most likely need to [manually install well-known files on the base domain's server](configuring-well-known.md#manually-installing-well-known-files-on-the-base-domains-server).
 
 To have the base domain served from the integrated web server, add the following configuration to your `inventory/host_vars/matrix.example.com/vars.yml` file:
 
