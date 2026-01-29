@@ -1,22 +1,30 @@
-# 1. Identity Setting: Sets user IDs to @user:bloomi5.com
-matrix_domain: "bloomi5.com"
+# --- Identity Configuration ---
+# Your user IDs will be @user:bloomi5.com
+matrix_domain: bloomi5.com
 
-# 2. Server Locations: Explicitly matches your DNS records
-matrix_server_fqn_matrix: "matrix.bloomi5.com"
-matrix_server_fqn_element: "element.bloomi5.com"
+# --- Reverse Proxy (Standard) ---
+# This is the setting that was missing in your previous attempt.
+matrix_playbook_reverse_proxy_type: playbook-managed-traefik
 
-# 3. CRITICAL: Split-Service Mode
-# Since your landing page (bloomi5.com) is on another server, we disable this
-# so the playbook doesn't try to hijack it or generate certs for it.
+# --- Split-Service Mode (CRITICAL) ---
+# Since your landing page (bloomi5.com) is on another server, we MUST disable this.
+# If this is true, the playbook will try to hijack your main domain and fail.
 matrix_static_files_container_labels_base_domain_enabled: false
 
-# 4. Enable Components
+# --- Components to Enable ---
+# 1. Element Web (Your chat interface)
 matrix_client_element_enabled: true
-matrix_coturn_enabled: true  # Required for calls
+# 2. Coturn (Required for Audio/Video calls to work)
+matrix_coturn_enabled: true
 
-# 5. Secrets & Email
-traefik_config_certificatesResolvers_acme_email: "faizanops@alazka.ai"
+# --- Standard Secrets & Config ---
+# I reused the secrets you generated earlier.
 matrix_homeserver_implementation: synapse
 matrix_homeserver_generic_secret_key: 'bfuRIGoLmwXCtmM6wuxtLiZuNu2g1SVGN9nwHgkXJ7hwQ9rEwTiYgsi59c6ytTqF'
 postgres_connection_password: 'kcRf9TpcLcuMvKNOjabsfrTAmogwHQ6PPxEYrlsBPjTeNTTJJa2ahaN30jvYLkHe'
+
+# Email for Let's Encrypt SSL notifications
+traefik_config_certificatesResolvers_acme_email: "faizanops@alazka.ai"
+
+# IPv6 Support (Keep enabled as per recommendation)
 devture_systemd_docker_base_ipv6_enabled: true

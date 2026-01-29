@@ -59,9 +59,5 @@ rm -rf roles/galaxy; ansible-galaxy install -r requirements.yml -p roles/galaxy/
 Then, run the command below to start installation:
 
 ```sh
-export ANSIBLE_HOST_KEY_CHECKING=False
-```
-
-```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=install-all,ensure-matrix-users-created,start --ask-pass
+ansible-playbook -i inventory/hosts setup.yml --tags=install-all,ensure-matrix-users-created,start
 ```
